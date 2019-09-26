@@ -1,25 +1,45 @@
-var keys = require('./keys.js');
-
-var spotify = new song();
+const inquirer = require("inquirer");
+const keys = require('./keys.js');
+const Spotify = require("node-spotify-api");
+const spotify = new Spotify(keys.spotify);
 
 var search = process.argv[2];
 
 var term = process.argv.slice(3).join(" ");
 
+axios.get("https://rest.bandsintown.com/artists/ + artist + ")
 
-if (!search) {
-  search = "song";
-}
+inquirer
+  .prompt([
+    {
+      name: "search",
+      message: "Are you search for a song or an artist?",
+      type: "list",
+      choices: ["Song", "Artist"]
+    },
+    {
+      name: "term",
+      message: "Enter your search:",
+      default: "Never Gonna Give You Up"
+    }
+  ])
+  .then(function(answer) {
+    if (answer.search === "song") {
+      songs.findSong(answer.term);
+    } else {
+      songs.findArtist(answer.term);
+    }
+  });
 
 
-if (!term) {
-  term = "Never Gonna Give You Up";
-}
 
-// Print whether searching for a show or actor, print the term as well
-if (search === "song") {
-  console.log("Searching for a song");
-  tv.findShow(term);
-} else {
-  console.log("Searching for artist");
-}
+
+
+
+
+
+
+
+
+
+
